@@ -51,18 +51,22 @@ export default function Onboarding({
       }
       await initVault(usePhrase);
 
-      const settings: Settings = {
-        ...defaultSettings,
-        goalMode: goal,
-        defaultCycleLength: cycleLen,
-        defaultPeriodLength: periodLen,
-        themeId,
-        themeMode,
-        updatedAt: new Date().toISOString(),
-      };
-      setSettings(settings);
+      // Only seed settings on NEW vaults. Existing vaults should keep their
+      // remote settings (theme, custom accent, etc.) intact when joined.
+      if (mode === "new") {
+        const settings: Settings = {
+          ...defaultSettings,
+          goalMode: goal,
+          defaultCycleLength: cycleLen,
+          defaultPeriodLength: periodLen,
+          themeId,
+          themeMode,
+          updatedAt: new Date().toISOString(),
+        };
+        setSettings(settings);
+      }
 
-      if (lastPeriod) {
+      if (lastPeriod && mode === "new") {
         // Seed the first period: log bleeding for periodLen days starting at lastPeriod
         const start = parseISO(lastPeriod);
         const today = new Date();
