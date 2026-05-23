@@ -1,0 +1,10 @@
+{
+  "name": "Lune — Period Tracker",
+  "short_name": "Lune",
+  "description": "A calm, private period tracker that syncs across devices with a passphrase.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fff5f7",
+  "theme_color": "#fff5f7",
+  "icons": []
+}
