@@ -10,7 +10,7 @@ type ThemeCtx = {
 
 const Ctx = createContext<ThemeCtx>({ resolvedMode: "light" });
 
-function applyTheme(settings: Settings) {
+export function applyTheme(settings: Settings) {
   const palette: ThemePalette = themes.find((t) => t.id === settings.themeId) ?? themes[0];
   let mode: "light" | "dark" = "light";
   if (settings.themeMode === "system") {

@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { useStore } from "./Store";
+import { applyTheme } from "./ThemeProvider";
 import { generatePassphrase } from "@/lib/vault";
 import { GOAL_MODES } from "@/lib/constants";
 import { GoalMode, Settings, defaultSettings } from "@/lib/schema";
@@ -26,6 +27,24 @@ export default function Onboarding({
   const [lastPeriod, setLastPeriod] = useState<string>(""); // YYYY-MM-DD
   const [themeId, setThemeId] = useState("rose");
   const [themeMode, setThemeMode] = useState<"light" | "dark" | "system">("system");
+
+  // Live preview: re-apply theme tokens whenever the picker changes
+  useEffect(() => {
+    applyTheme({
+      ...defaultSettings,
+      themeId,
+      themeMode,
+      updatedAt: new Date().toISOString(),
+    });
+  }, [themeId, themeMode]);
+
+  // Reset to the stored settings when onboarding closes
+  useEffect(() => {
+    return () => {
+      // restore page-level applied theme after onboarding completes
+      // (Shell's ThemeProvider will re-apply from saved settings)
+    };
+  }, []);
   const [showPhrase, setShowPhrase] = useState(false);
   const [copied, setCopied] = useState(false);
   const [busy, setBusy] = useState(false);
@@ -105,7 +124,7 @@ export default function Onboarding({
         <Card>
           {step === "welcome" && (
             <div className="space-y-5">
-              <h1 className="text-2xl font-medium tracking-tight">Welcome to Lune</h1>
+              <h1 className="text-2xl font-medium tracking-tight">Welcome to Luna</h1>
               <p className="text-muted leading-relaxed">
                 A calm, private period tracker that syncs across all your devices with a single passphrase.
                 No accounts, no email, no ads — just your cycle, wherever you are.
@@ -197,7 +216,7 @@ export default function Onboarding({
           {step === "profile" && (
             <div className="space-y-5">
               <Header back={back}>Your cycle</Header>
-              <p className="text-muted text-sm">A starting point — Lune will personalize this as you log.</p>
+              <p className="text-muted text-sm">A starting point — Luna will personalize this as you log.</p>
               <div className="space-y-4">
                 <Field label="Goal">
                   <select
@@ -295,7 +314,7 @@ export default function Onboarding({
                 </div>
               </Field>
               <PrimaryButton onClick={finish} disabled={busy}>
-                {busy ? "Setting up..." : "Open Lune"}
+                {busy ? "Setting up..." : "Open Luna"}
               </PrimaryButton>
             </div>
           )}

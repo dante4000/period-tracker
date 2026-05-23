@@ -63,7 +63,10 @@ function App({ syncState }: { syncState: string }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 pb-36">
+    <div
+      className="max-w-2xl mx-auto px-4 sm:px-6 pt-6"
+      style={{ paddingBottom: "calc(env(safe-area-inset-bottom, 0px) + 8rem)" }}
+    >
       <Header syncState={syncState} />
 
       <main className="space-y-5">
@@ -108,7 +111,7 @@ function Header({ syncState }: { syncState: string }) {
           ☾
         </div>
         <div>
-          <div className="text-lg font-medium tracking-tight leading-none">Lune</div>
+          <div className="text-lg font-medium tracking-tight leading-none">Luna</div>
           <div className="text-[10px] uppercase tracking-wider text-subtle font-medium mt-0.5">
             Cycle tracker
           </div>
@@ -151,8 +154,9 @@ function TabBar({ tab, setTab }: { tab: Tab; setTab: (t: Tab) => void }) {
   ];
   return (
     <nav
-      className="fixed bottom-3 left-1/2 -translate-x-1/2 px-2 py-2 rounded-full flex gap-1 z-40 glass"
+      className="fixed left-1/2 -translate-x-1/2 px-2 py-2 rounded-full flex gap-1 z-40 glass"
       style={{
+        bottom: "max(0.75rem, env(safe-area-inset-bottom, 0.75rem))",
         border: "1px solid var(--border)",
         boxShadow: "var(--shadow)",
       }}

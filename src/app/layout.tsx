@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Lune — Period & Cycle Tracker",
+  title: "Luna — Period & Cycle Tracker",
   description:
     "A calm, private period tracker that syncs across your devices with a single passphrase.",
   manifest: "/manifest.webmanifest",

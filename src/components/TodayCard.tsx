@@ -41,12 +41,12 @@ export default function TodayCard({ onLogToday }: { onLogToday: () => void }) {
 
   return (
     <div
-      className="rounded-2xl p-6 shadow-card animate-scale-in"
+      className="rounded-2xl p-5 sm:p-6 shadow-card animate-scale-in"
       style={{ background: "var(--surface)", border: "1px solid var(--border)" }}
     >
-      <div className="flex items-start gap-5">
+      <div className="flex items-start gap-4 sm:gap-5">
         {/* Ring widget */}
-        <div className="relative w-28 h-28 shrink-0">
+        <div className="relative w-24 h-24 sm:w-28 sm:h-28 shrink-0">
           <svg viewBox="0 0 100 100" className="w-full h-full -rotate-90">
             <circle
               cx={50}
@@ -85,10 +85,10 @@ export default function TodayCard({ onLogToday }: { onLogToday: () => void }) {
           <div className="text-xs uppercase tracking-wider text-subtle font-medium mb-1">
             {format(new Date(), "EEEE, MMM d")}
           </div>
-          <h2 className="text-xl font-medium tracking-tight" style={{ color: phase.color }}>
+          <h2 className="text-lg sm:text-xl font-medium tracking-tight" style={{ color: phase.color }}>
             {phase.title}
           </h2>
-          <p className="text-sm text-muted mt-1 leading-snug">{phase.body}</p>
+          <p className="text-[13px] sm:text-sm text-muted mt-1 leading-snug">{phase.body}</p>
           {daysLabel && (
             <div
               className="inline-block mt-3 px-3 py-1 rounded-full text-xs font-medium"

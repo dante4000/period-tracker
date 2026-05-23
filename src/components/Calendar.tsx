@@ -209,7 +209,7 @@ export default function Calendar({ selectedDate, onSelect }: Props) {
 
 function Legend({ hideFertile }: { hideFertile: boolean }) {
   return (
-    <div className="flex items-center justify-center gap-4 px-4 pb-3 pt-1 text-[10px] text-subtle uppercase tracking-wider">
+    <div className="flex items-center justify-center flex-wrap gap-x-3 gap-y-1 px-3 pb-3 pt-1 text-[10px] text-subtle uppercase tracking-wider">
       <span className="flex items-center gap-1.5">
         <span className="w-2.5 h-2.5 rounded-full" style={{ background: "var(--flow-medium)" }} />
         Period
