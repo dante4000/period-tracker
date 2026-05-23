@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { format, parseISO } from "date-fns";
 import { useStore } from "./Store";
 import {
@@ -29,32 +29,34 @@ export default function DaySheet({
     [snapshot.entries, date]
   );
 
-  const [entry, setLocal] = useState<DayEntry>(() =>
-    existing || {
-      id: `e-${date}-${Math.random().toString(36).slice(2, 9)}`,
-      date,
-      updatedAt: new Date().toISOString(),
-    }
-  );
-
-  useEffect(() => {
-    setLocal(
+  const initial = useMemo<DayEntry>(
+    () =>
       existing || {
         id: `e-${date}-${Math.random().toString(36).slice(2, 9)}`,
         date,
         updatedAt: new Date().toISOString(),
-      }
-    );
-  }, [date, existing]);
+      },
+    [existing, date]
+  );
+
+  const [entry, setLocal] = useState<DayEntry>(initial);
+  // Ref mirrors latest entry so rapid clicks read fresh state, not stale closure
+  const entryRef = useRef<DayEntry>(initial);
+
+  useEffect(() => {
+    entryRef.current = initial;
+    setLocal(initial);
+  }, [initial]);
 
   const update = (patch: Partial<DayEntry>) => {
-    const next = { ...entry, ...patch, updatedAt: new Date().toISOString() };
+    const next = { ...entryRef.current, ...patch, updatedAt: new Date().toISOString() };
+    entryRef.current = next;
     setLocal(next);
     setEntry(next);
   };
 
   const toggleArr = (key: "symptoms" | "mood" | "sex" | "medications", val: string) => {
-    const arr = (entry[key] as string[]) || [];
+    const arr = (entryRef.current[key] as string[]) || [];
     const has = arr.includes(val);
     update({ [key]: has ? arr.filter((x) => x !== val) : [...arr, val] } as Partial<DayEntry>);
   };
@@ -74,8 +76,8 @@ export default function DaySheet({
   return (
     <div className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-6 animate-fade-in">
       <div
-        className="absolute inset-0"
-        style={{ background: "color-mix(in oklab, black 30%, transparent)" }}
+        className="absolute inset-0 backdrop-blur-sm"
+        style={{ background: "color-mix(in oklab, black 60%, transparent)" }}
         onClick={close}
       />
       <div

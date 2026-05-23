@@ -63,7 +63,7 @@ function App({ syncState }: { syncState: string }) {
   };
 
   return (
-    <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 pb-28">
+    <div className="max-w-2xl mx-auto px-4 sm:px-6 pt-6 pb-36">
       <Header syncState={syncState} />
 
       <main className="space-y-5">
