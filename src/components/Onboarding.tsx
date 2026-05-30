@@ -204,11 +204,21 @@ export default function Onboarding({
                 </div>
               )}
 
+              {/* Existing vaults already hold their own settings (theme, cycle,
+                  history) on the server. Re-asking the onboarding questions is
+                  pointless — finish() throws those answers away for existing
+                  vaults anyway. So jump straight to restoring. */}
               <PrimaryButton
-                onClick={next}
-                disabled={mode === "existing" && existingPhrase.trim().length < 4}
+                onClick={mode === "existing" ? finish : next}
+                disabled={
+                  busy || (mode === "existing" && existingPhrase.trim().length < 4)
+                }
               >
-                Continue
+                {mode === "existing"
+                  ? busy
+                    ? "Restoring…"
+                    : "Restore my data"
+                  : "Continue"}
               </PrimaryButton>
             </div>
           )}
